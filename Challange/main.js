@@ -105,7 +105,7 @@
 //   }
 //   loop();
 // })();
-
+/*
 (function() {
   function Question(question, answer, correct) {
     this.question = question;
@@ -178,3 +178,84 @@
   }
   loop();
 })();
+*/
+
+//ES6
+{
+  class Question {
+    constructor(question, answer, correct) {
+      this.question = question;
+      this.answer = answer;
+      this.correct = correct;
+    }
+    createQuestion() {
+      console.log(`${this.question}`);
+
+      for (let [idx, element] of this.answer.entries()) {
+        console.log(`${idx}:${element}`);
+      }
+    }
+
+    createAnswer(ans, score) {
+      let number;
+      if (this.correct !== ans) {
+        console.log("Wrong Answer");
+        number = score(false);
+      } else {
+        console.log("Answer is Correct!!!");
+        number = score(true);
+      }
+      this.createCount(number);
+    }
+    createCount(number) {
+      console.log(`Your Score is ${number}`);
+    }
+  }
+
+  let q1, q2, q3, q4, qus, random, ans;
+
+  q1 = new Question("What is my name???", ["Praveen", "Kumar", "ragul"], 0);
+  q2 = new Question(
+    "What is my fathers name???",
+    ["Praveen", "Kumar", "Appa"],
+    2
+  );
+  q3 = new Question(
+    "What is my Mothers name???",
+    ["Praveen", "Malathi", "ragul"],
+    1
+  );
+  q4 = new Question(
+    "What is my Brothers name???",
+    ["anna", "Kumar", "ragul"],
+    0
+  );
+
+  qus = [q1, q2, q3, q4];
+
+  function score() {
+    let num = 0;
+    return trf => {
+      if (trf !== true) {
+        return num;
+      } else {
+        return ++num;
+      }
+    };
+  }
+  let count = score();
+
+  function loop() {
+    random = Math.floor(Math.random() * qus.length);
+
+    qus[random].createQuestion();
+
+    ans = prompt("Choose the Answer");
+
+    if (ans !== "exit") {
+      qus[random].createAnswer(parseInt(ans), count);
+      loop();
+    }
+  }
+  loop();
+}
